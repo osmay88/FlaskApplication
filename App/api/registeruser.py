@@ -1,13 +1,12 @@
 from flask import request, current_app
 from flask_mail import Message
 from flask_restful import Resource, reqparse, marshal_with
+from flask_restful import fields
 
 from App import mail, db
 from App.models import User, ConfirmationLink
 
 from . import UserDto
-
-from flask_restful import fields
 
 resource_fields = {
     'id': fields.Integer,
@@ -18,7 +17,7 @@ resource_fields = {
 
 
 class RegisterUser(Resource):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.reqparse = reqparse.RequestParser()
 
         if request.json:
@@ -31,13 +30,22 @@ class RegisterUser(Resource):
             self.reqparse.add_argument('password', type=str, required=True,
                                        help='The password is required',
                                        location=['json', 'headers', 'values'])
+        else:
+            self.reqparse.add_argument('username', type=str, required=True,
+                                       help='Username field is required')
+            self.reqparse.add_argument('email', type=str, required=True,
+                                       help='Email address is required')
+            self.reqparse.add_argument('password', type=str, required=True,
+                                       help='The password is required')
+        super(RegisterUser, self).__init__(*args, **kwargs)
+
     @marshal_with(resource_fields)
     def post(self):
         args = self.reqparse.parse_args()
         if User.query.filter_by(username=args.get("username")).first():
             return "That user already exists"
 
-        new_user = User.create_user(args["username"],args["email"])
+        new_user = User.create_user(args["username"], args["email"])
         new_user.set_password(args["password"])
         link = ConfirmationLink.create_link()
         new_user.links.append(link)
@@ -51,4 +59,5 @@ class RegisterUser(Resource):
         msg.html = current_app.config["REGISTER_TEMPLATE"].format(link.link)
         mail.send(msg)
         #send_async_email.delay(msg)
-        return UserDto(username=str(new_user.username), email=str(new_user.email), id=new_user.id, status=new_user.active), 200
+        dto = UserDto(username=str(new_user.username), email=str(new_user.email), id=new_user.id, status=new_user.active)
+        return dto, 201

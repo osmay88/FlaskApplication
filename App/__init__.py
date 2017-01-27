@@ -47,6 +47,7 @@ from .api import *
 _api.add_resource(RegisterUser, '/register')
 _api.add_resource(ConfirmUser, '/confirm/<string:userlink>')
 _api.add_resource(LoginUser, '/loginuser')
+_api.add_resource(UpdateUser, '/<int:userid>/update')
 _api.add_resource(GenerateApiKey, '/<int:userid>/generatekey')
 
 

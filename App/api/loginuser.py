@@ -7,7 +7,7 @@ from App import db, User
 
 
 class LoginUser(Resource):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.reqparse = reqparse.RequestParser()
 
         if request.json:
@@ -17,11 +17,22 @@ class LoginUser(Resource):
             self.reqparse.add_argument('password', type=str, required=True,
                                        help='The password is required',
                                        location=['json', 'headers', 'values'])
+        else:
+            self.reqparse.add_argument('username', type=str, required=True,
+                                       help='Username field is required')
+            self.reqparse.add_argument('password', type=str, required=True,
+                                       help='The password is required')
+
+        super(LoginUser, self).__init__( *args, **kwargs)
 
     def post(self):
         values = self.reqparse.parse_args()
         user = db.session.query(User).filter_by(username=values.get("username")).first()
-        if user.check_password(values.get("password")):
+
+        if not user.active:
+            return make_response(jsonify({"error": "The user is not active."}), 401)
+
+        if user is not None and user.check_password(values.get("password")):
             ret = {'access_token': create_access_token(values.get("username"))}
             return make_response(jsonify(ret), 200)
-        return jsonify({"msg": "Bad username or password"}), 401
+        return make_response(jsonify({"error": "Bad username or password"}), 401)

@@ -11,7 +11,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite://:memory:'
     WTF_CSRF_ENABLED = False
     SECRET_KEY = 'aaaaaaa2222222kkkkkkkkk5kkkkdddd000000'
-    JWT_SECRET_KEY = 'aaaaaaa2222222kkkkkkkkk5kkkkdddd000000'
+    JWT_SECRET_KEY = 'aaacbafr2222222kkkkkkkkk5kkrrdddd0033400'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     MAIL_SERVER= 'smtp.gmail.com'
@@ -30,7 +30,7 @@ class Config:
     CELERY_BROKER_URL = 'redis://localhost:6379/0'
     CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
-    REGISTER_TEMPLATE="""
+    REGISTER_TEMPLATE = """
     <H1>Super cool email</H1>
     <p>Here i send you a super cool email about your registration
     To activate your account please click this link<a href="http://127.0.0.1:5000/confirm/{0}">ACTIVATE</a>
@@ -45,9 +45,11 @@ class Config:
     <p>
     """
 
+
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
+
 
 class ProductionConfig(Config):
     DEBUG = False
