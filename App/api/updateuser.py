@@ -1,6 +1,5 @@
 from flask import make_response
 from flask import request, jsonify
-from flask_jwt_extended import create_access_token
 from flask_restful import Resource, reqparse
 
 from App import db, User

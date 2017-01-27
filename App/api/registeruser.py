@@ -1,6 +1,4 @@
-from flask import make_response
 from flask import request, current_app
-from flask.json import jsonify
 from flask_mail import Message
 from flask_restful import Resource, reqparse, marshal_with
 from flask_restful import fields

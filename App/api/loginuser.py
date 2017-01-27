@@ -23,7 +23,7 @@ class LoginUser(Resource):
             self.reqparse.add_argument('password', type=str, required=True,
                                        help='The password is required')
 
-        super(LoginUser, self).__init__( *args, **kwargs)
+        super(LoginUser, self).__init__(*args, **kwargs)
 
     def post(self):
         values = self.reqparse.parse_args()
