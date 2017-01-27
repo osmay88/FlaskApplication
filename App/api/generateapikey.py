@@ -8,7 +8,6 @@ from App import db, User, mail
 
 
 class GenerateApiKey(Resource):
-
     @jwt_required
     def post(self, userid):
         user = db.session.query(User).filter_by(id=userid).first()
@@ -27,7 +26,7 @@ class GenerateApiKey(Resource):
 
         msg = Message("Hello",
                       sender=current_app.config["MAIL_USERNAME"],
-                      recipients=[user.email,])
+                      recipients=[user.email, ])
         msg.html = current_app.config["API_KEY_TEMPLATE"].format(user.appid)
         mail.send(msg)
         return make_response(jsonify({"appid": user.appid}), 200)

@@ -10,7 +10,7 @@ class ConfirmationLink(db.Model):
     __tablename__ = "confirmationlink"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     link = db.Column(db.Text(512))
-    active = db.Column(db.SmallInteger, default=1) # 0 -> link have been visited, 1 -> waiting for customer
+    active = db.Column(db.SmallInteger, default=1)  # 0 -> link have been visited, 1 -> waiting for customer
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     expire_on = db.Column(db.Date, default=datetime.date.today() + datetime.timedelta(10))
 

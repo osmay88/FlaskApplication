@@ -14,21 +14,17 @@ class Config:
     JWT_SECRET_KEY = 'aaacbafr2222222kkkkkkkkk5kkrrdddd0033400'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    MAIL_SERVER= 'smtp.gmail.com'
-    MAIL_PORT=465
-    MAIL_USE_TLS=False
-    MAIL_USE_SSL=True
-    MAIL_DEBUG=DEBUG
-    MAIL_USERNAME=os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD=os.environ.get("MAIL_PASSWORD")
-    MAIL_DEFAULT_SENDER=''
-    MAIL_MAX_EMAILS=''
-    MAIL_SUPPRESS_SEND=''
-    MAIL_ASCII_ATTACHMENTS=False
-
-    # Celery configuration
-    CELERY_BROKER_URL = 'redis://localhost:6379/0'
-    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
+    MAIL_DEBUG = DEBUG
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = ''
+    MAIL_MAX_EMAILS = ''
+    MAIL_SUPPRESS_SEND = ''
+    MAIL_ASCII_ATTACHMENTS = False
 
     REGISTER_TEMPLATE = """
     <H1>Super cool email</H1>
@@ -53,4 +49,4 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = "mysql://your_user@your_server/your_database"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("CONNECTION_STRING")  # mysql://....

@@ -1,4 +1,3 @@
-
 class UserDto(object):
     def __init__(self, id=None, username=None, email=None, status=None):
         self.id = id

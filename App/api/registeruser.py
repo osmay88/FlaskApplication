@@ -62,6 +62,7 @@ class RegisterUser(Resource):
                       recipients=["osmay.cruz@gmail.com"])
         msg.html = current_app.config["REGISTER_TEMPLATE"].format(link.link)
         mail.send(msg)
-        #send_async_email.delay(msg)
-        dto = UserDto(username=str(new_user.username), email=str(new_user.email), id=new_user.id, status=new_user.active)
+        # send_async_email.delay(msg)
+        dto = UserDto(username=str(new_user.username), email=str(new_user.email), id=new_user.id,
+                      status=new_user.active)
         return dto, 201

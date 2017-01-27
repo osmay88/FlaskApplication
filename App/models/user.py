@@ -1,6 +1,5 @@
 import datetime
 
-
 from App import db
 from . import hash_512
 
@@ -16,7 +15,7 @@ class User(db.Model):
     active = db.Column(db.SmallInteger, default=0)  # 0 -> user not verified, 1 -> user verified
 
     links = db.relationship('ConfirmationLink',
-                    backref=db.backref('user', lazy='joined'), lazy='dynamic')
+                            backref=db.backref('user', lazy='joined'), lazy='dynamic')
 
     @classmethod
     def create_user(cls, username='', email='', password=''):
@@ -31,7 +30,7 @@ class User(db.Model):
     def check_password(self, password):
         return self.password == hash_512(password)
 
-    def update_password(self,old_password, new_password):
+    def update_password(self, old_password, new_password):
         if self.password != hash_512(old_password):
             return False
         self.password = hash_512(new_password)
