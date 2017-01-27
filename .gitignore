@@ -1,0 +1,7 @@
+*.db
+*.db3
+*.pyc
+__pycache__/
+static/
+config.py
+.idea/
