@@ -10,7 +10,8 @@ class Config:
     TESTING = False
     SQLALCHEMY_DATABASE_URI = 'sqlite://:memory:'
     WTF_CSRF_ENABLED = False
-    SECRET_KEY = 'aaaaaaa2222222kkkkkkkkk5kkkkdddd000000',
+    SECRET_KEY = 'aaaaaaa2222222kkkkkkkkk5kkkkdddd000000'
+    JWT_SECRET_KEY = 'aaaaaaa2222222kkkkkkkkk5kkkkdddd000000'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     MAIL_SERVER= 'smtp.gmail.com'
