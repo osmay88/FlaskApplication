@@ -1,4 +1,6 @@
+from flask import make_response
 from flask import request, current_app
+from flask.json import jsonify
 from flask_mail import Message
 from flask_restful import Resource, reqparse, marshal_with
 from flask_restful import fields
@@ -9,10 +11,11 @@ from App.models import User, ConfirmationLink
 from . import UserDto
 
 resource_fields = {
-    'id': fields.Integer,
+    'id': fields.String,
     'username': fields.String,
     'email': fields.String,
-    'status': fields.Boolean
+    'status': fields.Boolean,
+    'error': fields.String
 }
 
 
@@ -43,7 +46,10 @@ class RegisterUser(Resource):
     def post(self):
         args = self.reqparse.parse_args()
         if User.query.filter_by(username=args.get("username")).first():
-            return "That user already exists"
+            return UserDto(error="That username already exists"), 400
+
+        if User.query.filter_by(email=args.get("email")).first():
+            return UserDto(error="That email already exists"), 400
 
         new_user = User.create_user(args["username"], args["email"])
         new_user.set_password(args["password"])
