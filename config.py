@@ -42,11 +42,11 @@ class Config:
     """
 
 
-class DevelopmentConfig(Config):
+class Development(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
 
 
-class ProductionConfig(Config):
+class Production(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get("CONNECTION_STRING")  # mysql://....

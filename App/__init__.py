@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
@@ -6,7 +7,12 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config.from_object('config.DevelopmentConfig')
+config_settings = os.environ.get('ENV_SETTINGS')
+
+if config_settings is None:
+    app.config.from_object('config.Development')
+else:
+    app.config.from_object(config_settings)
 
 db = SQLAlchemy(app)
 
