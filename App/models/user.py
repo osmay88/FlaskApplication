@@ -1,7 +1,7 @@
 import datetime
 
 from App import db
-from . import hash_512
+from . import hash_md5, hash_512
 
 
 class User(db.Model):
@@ -9,7 +9,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.VARCHAR(200), index=True)
     email = db.Column(db.VARCHAR(200), nullable=True)
-    appid = db.Column(db.VARCHAR(512), nullable=True)
+    appid = db.Column(db.VARCHAR(200), nullable=True)
     name = db.VARCHAR(db.VARCHAR(200))
     password = db.Column("pass", db.VARCHAR(512), nullable=True)
     active = db.Column(db.SmallInteger, default=0)  # 0 -> user not verified, 1 -> user verified
@@ -22,7 +22,7 @@ class User(db.Model):
         return User(username=username, email=email, password=password)
 
     def generate_api_key(self):
-        self.appid = hash_512(datetime.datetime.now())
+        self.appid = hash_md5(datetime.datetime.now())
 
     def set_password(self, password_str):
         self.password = hash_512(password_str)
