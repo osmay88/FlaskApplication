@@ -1,5 +1,6 @@
 from flask import current_app, jsonify
 from flask import make_response
+from flask_jwt_extended import get_jwt_claims
 from flask_jwt_extended import jwt_required
 from flask_mail import Message
 from flask_restful import Resource
@@ -9,8 +10,9 @@ from App import db, User, mail
 
 class GenerateApiKey(Resource):
     @jwt_required
-    def post(self, userid):
-        user = db.session.query(User).filter_by(id=userid).first()
+    def post(self):
+        claims = get_jwt_claims()
+        user = db.session.query(User).filter_by(id=claims["id"]).first()
 
         if user is None:
             return make_response(jsonify({"error": "Invalid user id"}), 400)

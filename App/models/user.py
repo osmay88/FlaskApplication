@@ -38,3 +38,10 @@ class User(db.Model):
 
     def activate(self):
         self.active = 1
+
+    def __as_dict__(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email
+        }

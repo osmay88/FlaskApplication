@@ -1,5 +1,7 @@
 from flask import make_response
 from flask import request, jsonify
+from flask_jwt_extended import get_jwt_claims
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse
 
 from App import db, User
@@ -24,12 +26,14 @@ class UpdateUser(Resource):
 
         super(UpdateUser, self).__init__(*args, **kwargs)
 
-    def post(self, userid):
+    @jwt_required
+    def post(self, ):
         values = self.reqparse.parse_args()
-        user = db.session.query(User).filter_by(id=userid).first()
-
+        claims = get_jwt_claims()
+        user = db.session.query(User).filter_by(id=claims["id"]).first()
         if user is not None:
             if user.update_password(old_password=values["oldpassword"], new_password=values["newpassword"]):
+                db.session.commit()
                 return make_response(jsonify("Password updated"), 200)
             else:
                 return make_response(jsonify({"error": "Old password and new password doesnt match"}), 400)

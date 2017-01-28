@@ -33,6 +33,8 @@ class LoginUser(Resource):
             return make_response(jsonify({"error": "The user is not active."}), 401)
 
         if user is not None and user.check_password(values.get("password")):
-            ret = {'access_token': create_access_token(values.get("username")), 'userid': user.id}
+            ret = {
+                'access_token': create_access_token(user.__as_dict__())
+            }
             return make_response(jsonify(ret), 200)
         return make_response(jsonify({"error": "Bad username or password"}), 401)
