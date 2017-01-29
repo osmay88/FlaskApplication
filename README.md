@@ -20,7 +20,7 @@
         After the user is register, a email is send with a confirmation link.
     </li>
     <li>
-        <i>/activate/+activationlink</i> Activate the user in the database.
+        <i>/confirm/+activationlink</i> Activate the user in the database.
     </li>
     <li>
         <i>/login</i> Login a user to the system. The user data is a json that contains 2 values:
@@ -31,10 +31,10 @@
         If the login success a bearer token is return.
     </li>
     <li>
-        <i>/generateapikey</i> Generate an api key, requires authentification.
+        <i>/generatekey</i> Generate an api key, requires authentification.
     </li>
     <li>
-        <i>/update</i> Update the user password. The user data is a json that contains 3 values:
+        <i>/update</i> Update the user password, required athentification. The user data is a json that contains 2 values:
         <ul>
             <li>oldpassword</li>
             <li>newpassword</li>
