@@ -5,7 +5,8 @@
     <li><strong>CONNECTION_STRING</strong> the database connection string</li>
     <li><strong>MAIL_USERNAME</strong> email username</li>
     <li><strong>MAIL_PASSWORD</strong> email password</li>
-    <li><strong>ENV_SETTINGS</strong> settings to be used when running the application. Values: Development, Production</li>
+    <li><strong>ENV_SETTINGS</strong> Settings to be used when running the application. Values: Development, Production</li>
+    <li><strong>TEST_EMAIL</strong> Email to use when testing the application</li>
 </ul>
 
 <p> The API consist of 4 endpoints</p>
