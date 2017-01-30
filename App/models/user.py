@@ -1,21 +1,21 @@
 import datetime
 
-from App import db
+from App import _db
 from . import hash_md5, hash_512
 
 
-class User(db.Model):
+class User(_db.Model):
     __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.VARCHAR(200), index=True)
-    email = db.Column(db.VARCHAR(200), nullable=True)
-    appid = db.Column(db.VARCHAR(200), nullable=True)
-    name = db.VARCHAR(db.VARCHAR(200))
-    password = db.Column("pass", db.VARCHAR(512), nullable=True)
-    active = db.Column(db.SmallInteger, default=0)  # 0 -> user not verified, 1 -> user verified
+    id = _db.Column(_db.Integer, primary_key=True, autoincrement=True)
+    username = _db.Column(_db.VARCHAR(200), index=True)
+    email = _db.Column(_db.VARCHAR(200), nullable=True)
+    appid = _db.Column(_db.VARCHAR(200), nullable=True)
+    name = _db.VARCHAR(_db.VARCHAR(200))
+    password = _db.Column("pass", _db.VARCHAR(512), nullable=True)
+    active = _db.Column(_db.SmallInteger, default=0)  # 0 -> user not verified, 1 -> user verified
 
-    links = db.relationship('ConfirmationLink',
-                            backref=db.backref('user', lazy='joined'), lazy='dynamic')
+    links = _db.relationship('ConfirmationLink',
+                             backref=_db.backref('user', lazy='joined'), lazy='dynamic')
 
     @classmethod
     def create_user(cls, username='', email='', password=''):

@@ -45,6 +45,7 @@ class Config:
 class Development(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
+    TEST_EMAIL = os.environ.get("TEST_EMAIL")
 
 
 class Production(Config):

@@ -5,14 +5,14 @@ from flask_jwt_extended import jwt_required
 from flask_mail import Message
 from flask_restful import Resource
 
-from App import db, User, mail
+from App import _db, User, mail
 
 
 class GenerateApiKey(Resource):
     @jwt_required
     def post(self):
         claims = get_jwt_claims()
-        user = db.session.query(User).filter_by(id=claims["id"]).first()
+        user = _db.session.query(User).filter_by(id=claims["id"]).first()
 
         if user is None:
             return make_response(jsonify({"error": "Invalid user id"}), 400)
@@ -24,7 +24,7 @@ class GenerateApiKey(Resource):
             return make_response(jsonify({"error": "The user is not activated"}), 400)
 
         user.generate_api_key()
-        db.session.commit()
+        _db.session.commit()
 
         msg = Message("Hello",
                       sender=current_app.config["MAIL_USERNAME"],

@@ -3,7 +3,7 @@ from flask_mail import Message
 from flask_restful import Resource, reqparse, marshal_with
 from flask_restful import fields
 
-from App import mail, db
+from App import mail, _db
 from App.models import User, ConfirmationLink
 
 from . import UserDto
@@ -54,12 +54,12 @@ class RegisterUser(Resource):
         link = ConfirmationLink.create_link()
         new_user.links.append(link)
 
-        db.session.add(new_user)
-        db.session.commit()
+        _db.session.add(new_user)
+        _db.session.commit()
 
         msg = Message("Hello",
                       sender="osmay.cruz@gmail.com",
-                      recipients=["osmay.cruz@gmail.com"])
+                      recipients=[new_user.email if not current_app.config.get("TEST_EMAIL") else current_app.config["TEST_EMAIL"]])
         msg.html = current_app.config["REGISTER_TEMPLATE"].format(link.link)
         mail.send(msg)
         # send_async_email.delay(msg)

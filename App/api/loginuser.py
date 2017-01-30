@@ -3,7 +3,7 @@ from flask import request, jsonify
 from flask_jwt_extended import create_access_token
 from flask_restful import Resource, reqparse
 
-from App import db, User
+from App import _db, User
 
 
 class LoginUser(Resource):
@@ -27,7 +27,7 @@ class LoginUser(Resource):
 
     def post(self):
         values = self.reqparse.parse_args()
-        user = db.session.query(User).filter_by(username=values.get("username")).first()
+        user = _db.session.query(User).filter_by(username=values.get("username")).first()
 
         if not user.active:
             return make_response(jsonify({"error": "The user is not active."}), 401)
